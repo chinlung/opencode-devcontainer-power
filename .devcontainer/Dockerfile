@@ -80,18 +80,12 @@ RUN sh -c "$(wget -O- https://github.com/deluan/zsh-in-docker/releases/download/
   -a "export PROMPT_COMMAND='history -a' && export HISTFILE=/commandhistory/.bash_history" \
   -x
 
-# Install opencode via go install (requires Go)
+# Install opencode via official installer
 USER root
-RUN curl -fsSL https://go.dev/dl/go1.23.4.linux-$(dpkg --print-architecture).tar.gz | tar -C /usr/local -xzf -
-ENV PATH=$PATH:/usr/local/go/bin:/home/node/go/bin
+RUN mkdir -p /home/node/.local/bin && chown -R node:node /home/node/.local
 USER node
-
-# Set GOPATH for node user
-ENV GOPATH=/home/node/go
-RUN mkdir -p /home/node/go/bin
-
-# Install opencode
-RUN go install github.com/sst/opencode@${OPENCODE_VERSION}
+ENV PATH=$PATH:/home/node/.local/bin:/home/node/.opencode/bin
+RUN curl -fsSL https://opencode.ai/install | bash -s -- --no-modify-path
 
 # Copy and set up firewall script
 COPY init-firewall.sh /usr/local/bin/
