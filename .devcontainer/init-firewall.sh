@@ -73,7 +73,8 @@ for domain in \
     "copilot-telemetry.githubusercontent.com" \
     "default.exp-tas.com" \
     "origin-tracker.githubusercontent.com" \
-    "opencode.ai"; do
+    "opencode.ai" \
+    "models.dev"; do
     echo "Resolving $domain..."
     ips=$(dig +noall +answer A "$domain" | awk '$4 == "A" {print $5}')
     if [ -z "$ips" ]; then
