@@ -1,0 +1,16 @@
+# OpenCode config
+.opencode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*.swo
+*~
+.idea/
+*.iml
+
+# Logs
+*.log
